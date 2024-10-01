@@ -321,6 +321,7 @@ class Base:
         self.base_buffer_specific_contact_resistivity = base_buffer_specific_contact_resistivity
 
     def netlist(self):
+        # FIXME: need to include element name so this can stack in MJ cells.
         r_base = self.base_buffer_specific_contact_resistivity / self.area  # Approx 1 mOhms
         k = self.idx[2]
         return f"""
@@ -355,6 +356,7 @@ class RearContact:
         self.rear_contact_specific_contact_resistivity = rear_contact_specific_contact_resistivity
 
     def netlist(self):
+        # FIXME: need to include element name so this can stack in MJ cells.
         r_rear_contact = self.rear_contact_specific_contact_resistivity / self.area  # Approx 1 mOhms
         k = self.idx[2]
         return f"""

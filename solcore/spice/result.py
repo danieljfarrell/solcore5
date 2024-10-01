@@ -3,13 +3,12 @@
 
 
 import numpy as np 
+from numpy import ndarray
 import matplotlib.pyplot as plt
 import itertools
 from pathlib import Path
 from typing import TYPE_CHECKING, Optional, Union
-if TYPE_CHECKING:
-    from numpy import ndarray
-    from PySpice.Probe.WaveForm import DcAnalysis
+from PySpice.Probe.WaveForm import DcAnalysis
 
 
 def get_characterisic_curve(result: DcAnalysis) -> tuple[ndarray, ndarray]:
