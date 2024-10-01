@@ -18,15 +18,15 @@ if TYPE_CHECKING:
 
 
 def generate_netlist(
-    cell_metalisation_pattern: np.ndarray | GridPattern, # the cells that are grid fingers
+    cell_metalisation_pattern: np.ndarray | GridPattern,
     cell_illumination_map: np.ndarray,
-    cell_size: tuple[float, float], # cell_size = (x_distance, y_distance), the edge lengths of the solar cell, assumes rectangular shape.
+    cell_size: tuple[float, float],
     junctions: list[dict],
-    metal_height: float = 3e-6, # Height: m, of grid fingers
-    metal_resistivity: float = 3.5e-8, # Resistivity: Ohm m, of the metal used for front contacts
-    metal_semiconductor_specific_contact_resistivity: float = 6.34e-10, # Specific contact resistivity: Ohm m2, of metal-semiconductor layer
-    base_buffer_specific_contact_resistivity: float = 1.2e-8, # Specific contact resistivity: Ohm m2, of base-buffer layer
-    rear_contact_specific_contact_resistivity: float = 3.5e-6, # Specific contact resistivity: Ohm m2, of the rear contact layer
+    metal_height: float = 3e-6,
+    metal_resistivity: float = 3.5e-8,
+    metal_semiconductor_specific_contact_resistivity: float = 6.34e-10,
+    base_buffer_specific_contact_resistivity: float = 1.2e-8,
+    rear_contact_specific_contact_resistivity: float = 3.5e-6,
     temperature: float = 300.0,
     show_plots=False
 ) -> str:
@@ -35,7 +35,7 @@ def generate_netlist(
 
     Parameters
     ----------
-    cell_metalisation_pattern : np.ndarray | GridPattern | str | pathlib.Path
+    cell_metalisation_pattern : np.ndarray | GridPattern
         A 2D array showing how metalisation is applied to the solar cell, a GridPattern object, 
         or a Path to an image specified as a string or a pathlib.Path
 
@@ -46,10 +46,8 @@ def generate_netlist(
 
         If the 2D array is read from an image file it will be normalised and values scaled between 0 and 1.
 
-    cell_illumination_map: np.ndarray | str | pathlib.Path
-        A 2D array or path to an image showing the illumination distribution over the solar cell's surface.
-
-        If the 2D array is read from an image file it will be normalised and values scaled between 0 and 1.
+    cell_illumination_map: np.ndarray
+        A 2D array providing the illumination distribution over the solar cell's surface.
     
     cell_size : Tuple[float, float]
         The tuple gives the edge length in the x and y direction of solar cell. This is used to 
@@ -97,18 +95,16 @@ def generate_netlist(
     Discussion
     ----------
 
-    The net list is intended to be run using a PySpice Circuit objects for this reason
-    a .DC command is not included nor is the .end statement. PySpice will append these
-    to the net list when it runs. To complete the net list so that is can be run in an 
-    external simulator simply append the two lines
+    The net list is intended to be run using PySpice Circuit objects; for this reason, the `.DC` command 
+    is not included, nor is the `.end` statement. When PySpice runs, it will append these to the net
+    list. To run the net list in an external simulator, simply append the two lines.
 
         .DC vin -0.1 1.4 0.1
         .end
-    
-    The first line is the .DC command the performs a voltage sweep over a sensible range
-    for your solar cell, in this example the voltage starts at -0.1, ends at 1.4 in steps
-    of 0.1 volts. The second line is a command that tells spice it has reached the end of
-    the netlist.
+
+    The first line is the `.DC` command that tells SPICE to sweep the voltage; in this example, the
+    voltage starts at -0.1 and ends at 1.4 in steps of 0.1 volts. The second line is a command that 
+    tells SPICE it has reached the end of the netlist.
     """
 
     # Check we have all the information we need to continue
@@ -222,22 +218,17 @@ def _create_grid_layer(
 
     Parameters
     ----------
-    cell_metalisation_pattern : np.ndarray | GridPattern | str | pathlib.Path
-        A 2D array showing how metalisation is applied to the solar cell, a GridPattern object, 
-        or a Path to an image specified as a string or a pathlib.Path
-
+    cell_metalisation_pattern : np.ndarray | GridPattern
+        A 2D array or a GridPattern object showing how metalisation is applied to the solar cell.
+        
         The 2D image will be interpretted as followed where "px" is the gray scale value of the pixel:
             - Bus bar: px > 0.8
             - Grid finger: 0.2 < px < 0.8
             - No Metal: px < 0.2
 
-        If the 2D array is read from an image file it will be normalised and values scaled between 0 and 1.
+    cell_illumination_map: np.ndarray
+        A 2D array showing the illumination distribution over the solar cell's surface.
 
-    cell_illumination_map: np.ndarray | str | pathlib.Path
-        A 2D array or path to an image showing the illumination distribution over the solar cell's surface.
-
-        If the 2D array is read from an image file it will be normalised and values scaled between 0 and 1.
-    
     cell_size : Tuple[float, float]
         The tuple gives the edge length in the x and y direction of solar cell. This is used to 
         calculate the length and width of each pixel in the input image. Units: m
@@ -293,7 +284,7 @@ def _create_grid_layer(
         fig.tight_layout()
         plt.show()
     
-        # Create a 3D matrix to hold each cell:
+    # Create a 3D matrix to hold each cell:
     #  - Cells with indices [:,:,0] are Metal or Bus objects
     #  - Cells with indices [:,:,1] are semiconductor device cells
     X, Y = cell_illumination_map.shape

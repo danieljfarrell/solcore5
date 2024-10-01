@@ -12,15 +12,14 @@ from pathlib import Path
 class GridPattern:
     """Representation of a metalisation pattern on the front surface of a solar cell.
 
-    This class just defines an inteface and should be instantiated direclty, instead,
-    subclass this class and implement the `draw` method to render a grid pattern.
+    Instead of instantiating this class directly, subclass and implement the `draw` method to render a grid pattern.
 
     Discussion
     ----------
-    Three grayscale pixel values should be used when drawing the solar cell metalisation:
-        - black (0.0), represents no metalisation
-        - grey  (0.5), represents grid fingers
-        - white (1.0), represents bus bar.
+    You should use three grayscale pixel values to illustrate the solar cell metalization:
+    - black (0.0), represents no metalisation
+    - grey (0.5), represents grid fingers
+    - white (1.0), represents the bus bar.
     """
     def draw(self) -> pixie.Image:
         raise NotImplementedError("The draw() method should be implemented by subclasses to draw specific grid patterns.")

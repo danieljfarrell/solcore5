@@ -41,10 +41,10 @@ def get_maximum_power_point(result: DcAnalysis) -> tuple[float, float, int]:
     -------
     tuple : (float, float, int)
         A tuple like (vmax, pmax, maxidx), where:
-            vmax is the voltage at maximum power (units: V)
-            pmax is the maximum power (units: W)
-            maxidx is the index in the characterisic curve
-            corresponding to the maximum power point.
+            - vmax is the voltage at maximum power (units: V)
+            - pmax is the maximum power (units: W)
+            - maxidx is the index in the characterisic curve
+              corresponding to the maximum power point.
     """
     v, i = get_characterisic_curve(result)
     p = v * i

@@ -1,11 +1,11 @@
-"""Classes that aid in the construction of a distributed SPICE model
-of a solar cell. Think of these building blocks like sub-circuits that can be composed
-together in a 3D structure to build the solar cell structure.
+"""The classes help to create a distributed SPICE model for a solar cell. 
+Think of these building blocks as sub-circuits that you can combine into a
+3D structure to build the solar cell.
 """
 
 
 class Header:
-    """A class representing header information for the SPICE file"""
+    """A class representing header information for the SPICE netlist."""
 
     def __init__(
             self,
@@ -146,9 +146,9 @@ class Metal:
 class Bus:
     """A unit cell representing a SPICE model of metal bus bar segment.
 
-    There is really no difference between the the Metal and Bus classes, 
-    other than, by definition, the bus bar is connected to the voltage
-    source that sweeps the solar cell's bias.
+    The Bus bar class is very similar to the Metal class with one important
+    exception: the voltage of this node connects to the a voltage source
+    for sweeping the bias. Thus these nodes are all at the same voltage.
     """
 
     def __init__(
@@ -178,13 +178,6 @@ class Bus:
         resistivity_contact : float
             The resistivity of the metal-semiconductor contact in Ohm meter for
             this cell.
-
-        Discussion
-        ----------
-        From Ref. [1] height is 3e-6 metres, width is 9e-6 metres and resistiivty
-        is 3.5E-6 Ohm meters.
-
-        [1] M. Steiner et al., 10.1002/pip.989
         """
         self.idx = idx
         self.height = metal_height
