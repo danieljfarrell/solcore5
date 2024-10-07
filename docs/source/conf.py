@@ -68,7 +68,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Solcore'
-copyright = u'2023, Quantum Photovoltaics Group, Imperial College London'
+copyright = u'2024, Quantum Photovoltaics Group, Imperial College London'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -311,4 +311,4 @@ texinfo_documents = [
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'http://docs.python.org/': None}
+intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
