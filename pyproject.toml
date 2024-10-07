@@ -40,6 +40,8 @@ dependencies = [
     "yabox",
     "joblib",
     "solsesame",
+    "PySpice",
+    "pixie-python"
 ]
 dynamic = ["version"]
 
